@@ -36,7 +36,7 @@ class StudentsService {
         return student;
     };
 
-    public async existStudent(email: string) {
+    public async getByEmail(email: string) {
         const student = await studentsRepository.getByEmail(email);
         return !!student;
     }
@@ -47,7 +47,7 @@ class StudentsService {
             throw new ErrorResponse("Idade inválida", 400);
         }
 
-        const exist = await this.existStudent(newStudent.email);
+        const exist = await this.getByEmail(newStudent.email);
         if (exist) {
             throw new ErrorResponse("O Estudante já existe", 400);
         }
