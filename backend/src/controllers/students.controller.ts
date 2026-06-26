@@ -2,8 +2,7 @@
 // Esse controller vai ser responsável por modificar a entrada e saida das requisições caso necessário
 
 import studentsService from "@/services/students.service";
-import type { AuthRequest } from "@/types/auth.type.js";
-import type { NextFunction, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 
 class StudentsController {
 
@@ -22,7 +21,7 @@ class StudentsController {
     };
 
     // GET
-    public async getStudents(req: AuthRequest, res: Response, next: NextFunction) {
+    public async getStudents(req: Request, res: Response, next: NextFunction) {
         try {
 
             const students = await studentsService.getStudents();
@@ -34,7 +33,7 @@ class StudentsController {
     };
 
     // GET
-    public async getStudent(req: AuthRequest, res: Response, next: NextFunction) {
+    public async getStudent(req: Request, res: Response, next: NextFunction) {
         try {
 
             const { id } = req.params;
@@ -48,7 +47,7 @@ class StudentsController {
     };
 
     // POST
-    public async createStudent(req: AuthRequest, res: Response, next: NextFunction) {
+    public async createStudent(req: Request, res: Response, next: NextFunction) {
         try {
 
             const newStudent = req.body;
@@ -62,7 +61,7 @@ class StudentsController {
     };
 
     // PATCH
-    public async updateStudent(req: AuthRequest, res: Response, next: NextFunction) {
+    public async updateStudent(req: Request, res: Response, next: NextFunction) {
         try {
 
             const updatedStudent = req.body;
@@ -76,7 +75,7 @@ class StudentsController {
     };
 
     // DELETE
-    public async deleteStudent(req: AuthRequest, res: Response, next: NextFunction) {
+    public async deleteStudent(req: Request, res: Response, next: NextFunction) {
         try {
 
             const { id } = req.params;

@@ -1,9 +1,13 @@
+import bcrypt from 'bcrypt';
 // Aqui estou criando a classe service para gerenciar a terceira parte da requisição
 // Esse service vai ser responsável por administrar as regras de negócios
 
 import type { IStudent } from "@/interfaces/students.interface";
+import { prisma, type PrismaType } from "@/lib/prisma";
 import studentsRepository from "@/repositories/students.repository";
 import { ErrorResponse } from "@/types/error.type";
+import usersService from "./users.service";
+import { generatePassword } from "@/utils/util";
 
 class StudentsService {
 
@@ -37,14 +41,41 @@ class StudentsService {
         return !!student;
     }
 
-    public async createStudent(newStudent: IStudent) {
+    public async createStudent(newStudent: PrismaType.studentsCreateInput) {
+
+        if (newStudent.age < 16) {
+            throw new ErrorResponse("Idade inválida", 400);
+        }
 
         const exist = await this.existStudent(newStudent.email);
         if (exist) {
             throw new ErrorResponse("O Estudante já existe", 400);
         }
 
-        return await studentsRepository.create(newStudent)
+        return prisma.$transaction(async (tx) => {
+
+            const password = generatePassword(newStudent.name.split(" ")[0]!)
+
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            const user = await tx.users.create({
+                data: {
+                    email: newStudent.email,
+                    name: newStudent.name,
+                    role: "STUDENT",
+                    password: hashedPassword
+                }
+            })
+
+            if (!user) {
+                throw new ErrorResponse("Erro ao cadastrar aluno", 500)
+            }
+
+            return await tx.students.create({
+                data: { ...newStudent, status: "ATIVO" }
+            })
+
+        })
     };
 
     public async updateStudent(updatedStudent: IStudent) {
