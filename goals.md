@@ -5,36 +5,59 @@
 #### A Fazer - backend
 
  - [ ] Controllers
-    - [ ] Alunos
-    - [ ] Usuários
-    - [ ] Auth
+    - [x] Alunos
+    - [x] Usuários
+    - [x] Auth
 
 ####
- - [ ] Services
-    - [ ] Alunos
+ - [x] Services
+    - [x] Alunos
         - [x] GetAll
         - [x] GetByID
         - [x] GetByEmail
         - [x] Create
+            - Verificar se aluno já existe
         - [x] Update
+            - Verificar se aluno existe
         - [x] Delete
-    - [ ] Usuários
-        - [ ] GetAll
-        - [ ] GetByID
-        - [ ] GetByEmail
-        - [ ] Create
-        - [ ] Update
-        - [ ] Delete
-    - [ ] Auth
+            - Verificar se aluno existe
+            
+    ---
+
+    - [x] Usuários
+        - [x] GetAll
+        - [x] GetByID
+        - [x] GetByEmail
+        - [x] Create
+            - Verificar se usuário já existe
+        - [x] Update
+            - Atualizar por ID
+            - Verificar se usuário existe
+        - [x] Delete
+            - Deletar por ID
+            - Verificar se usuário existe
+
+    ---
+
+    - [x] Auth
+        - [ ] Register
+            - Verificar se palavra chave está na requisição
+            - Verificar se o usuário já existe
+            - Enviar senha pré-definida para email do usuário
+        - [ ] Login
+            - Verificar se o usuário já existe
+        - [ ] ForgetPassword
+            - Verificar se o usuário já existe
+            - Verificar se palavra chave está na requisição
 
 ####
  - [ ] Repositories
-    - [ ] Alunos
-    - [ ] Usuários
-    - [ ] Auth
+    - [x] Alunos
+    - [x] Usuários
+    - [x] Auth
 
 ####
- - [ ] Middlewares
+ - [x] Middlewares
     - [x] Auth
         - Verificar nivel de autorização
     - [x] Error
