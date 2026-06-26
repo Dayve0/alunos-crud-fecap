@@ -1,3 +1,6 @@
+// Aqui crie um middleware para tratamento de erros
+// Ele engloba erros previstos e não previstos na API
+
 import type { AuthRequest } from '@/types/auth.type.js';
 import { ErrorResponse } from '@/types/error.type.js';
 import type { NextFunction, Response } from 'express';
@@ -13,12 +16,12 @@ export default function errorMiddleware(
     if (error instanceof ErrorResponse) {
         return res.status(error.code).json({
             status: 'error',
-            message: error.message,
+            message: error.message
         });
     }
 
-    // Erros Operacionais / Inesperados
-    console.error('ERRO CRÍTICO NÃO TRATADO:', error);
+    // Erros não previstos
+    console.error('ERRO CRÍTICO:', error);
 
     return res.status(500).json({
         status: 'error',
