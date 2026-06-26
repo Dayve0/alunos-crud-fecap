@@ -4,7 +4,7 @@
 
 #### A Fazer - backend
 
- - [ ] Controllers
+ - [x] Controllers
     - [x] Alunos
     - [x] Usuários
     - [x] Auth
@@ -40,18 +40,18 @@
     ---
 
     - [x] Auth
-        - [ ] Register
+        - [x] Register
             - Verificar se palavra chave está na requisição
             - Verificar se o usuário já existe
             - Enviar senha pré-definida para email do usuário
-        - [ ] Login
+        - [x] Login
             - Verificar se o usuário já existe
-        - [ ] ForgetPassword
+        - [x] ForgetPassword
             - Verificar se o usuário já existe
             - Verificar se palavra chave está na requisição
 
 ####
- - [ ] Repositories
+ - [x] Repositories
     - [x] Alunos
     - [x] Usuários
     - [x] Auth
