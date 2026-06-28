@@ -6,10 +6,16 @@ import type { NextFunction, Request, Response } from "express";
 export default function authMiddleware(requiredRole: string) {
     return (req: Request, res: Response, next: NextFunction) => {
 
-        const useRole = req.headers['x-role'];
+        const user = JSON.parse(req.cookies.user)
 
-        if (!useRole || useRole !== requiredRole) {
-            throw new ErrorResponse("Acesso Negado", 403)
+        if (!user) {
+            throw new ErrorResponse("Acesso Negado sem cookie", 403)
+        }
+
+        const userRole = user.role
+
+        if (!userRole || userRole !== requiredRole) {
+            throw new ErrorResponse("Acesso Negado, sem permissão", 403)
         }
 
         next();

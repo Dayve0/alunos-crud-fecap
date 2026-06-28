@@ -5,5 +5,5 @@ export interface IUser {
     password: string
     role: string
     createdAt: Date
-    updatedAt: Date
+    updatedAt?: Date | null
 }

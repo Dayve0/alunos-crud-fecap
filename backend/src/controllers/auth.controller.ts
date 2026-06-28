@@ -1,5 +1,6 @@
 import authService from "@/services/auth.service";
 import { ErrorResponse } from "@/types/error.type";
+import { userMapper } from "@/utils/util";
 import type { NextFunction, Request, Response } from "express";
 
 class AuthController {
@@ -25,7 +26,10 @@ class AuthController {
                 throw new ErrorResponse("Não autorizado", 401)
             }
 
-            const { email } = req.body;
+
+            const data = req.body;
+
+            const { email } = data;
 
             const created = await authService.register(email);
 
@@ -40,11 +44,21 @@ class AuthController {
     public async login(req: Request, res: Response, next: NextFunction) {
         try {
 
-            const { email, password } = req.body;
+            const data = req.body
+
+            const { email, password } = data
+            const senha = password
 
             const user = await authService.login(email, password);
 
-            return res.status(200).json(user)
+            const cleanedUser = userMapper(user)
+
+            res.cookie("user", JSON.stringify(cleanedUser), {
+                sameSite: "lax",
+                maxAge: 1000 * 60 * 60 * 24 // Expira em 1 dia
+            })
+
+            return res.status(200).json(cleanedUser)
         }
         catch (error) {
             next(error)

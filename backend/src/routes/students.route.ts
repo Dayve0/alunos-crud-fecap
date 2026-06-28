@@ -16,7 +16,10 @@ route.get('/:id', authMiddleware("ADMIN"), studentsController.getStudent)
 route.post('/', authMiddleware("ADMIN"), studentsController.createStudent)
 
 // Atualizar um aluno
-route.put('/:id', authMiddleware("ADMIN"), studentsController.updateStudent)
+route.patch('/:id', authMiddleware("ADMIN"), studentsController.updateStudent)
+
+// Atualizar um aluno
+route.get('/activate/:id', authMiddleware("ADMIN"), studentsController.activateStudent)
 
 // Deletar/Desativar um aluno
 route.delete('/:id', authMiddleware("ADMIN"), studentsController.deleteStudent)

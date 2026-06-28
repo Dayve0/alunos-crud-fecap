@@ -3,7 +3,7 @@
 // Caso seja necessário a troca do ORM ou do BANCO fica mais fácil
 
 import type { IStudent } from "@/interfaces/students.interface";
-import { prisma } from "@/lib/prisma";
+import { prisma, PrismaType } from "@/lib/prisma";
 
 class StudentsRepository {
 
@@ -30,16 +30,16 @@ class StudentsRepository {
         return await prisma.students.findUnique({ where: { email: email } });
     };
 
-    public async create(newStudent: IStudent) {
+    public async create(newStudent: PrismaType.studentsCreateInput) {
         return await prisma.students.create({ data: { ...newStudent, status: "CADASTRADO" } });
     };
 
-    public async update(updatedStudent: IStudent) {
-        return await prisma.students.update({ where: { id: updatedStudent.id }, data: updatedStudent })
+    public async update(id: number, updatedStudent: PrismaType.studentsUpdateInput) {
+        return await prisma.students.update({ where: { id: id }, data: updatedStudent })
     };
 
     public async delete(id: number) {
-        return await prisma.students.update({ where: { id: id }, data: { status: "INATIVO", deletedAt: Date.now().toLocaleString("pt-BR") } });
+        return await prisma.students.update({ where: { id: id }, data: { status: "INATIVO", deletedAt: new Date().toISOString() } });
     };
 
 };

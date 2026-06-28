@@ -78,14 +78,14 @@ class StudentsService {
         })
     };
 
-    public async updateStudent(updatedStudent: IStudent) {
+    public async updateStudent(id: number, updatedStudent: Partial<IStudent>) {
 
-        const exist = await this.getByID(updatedStudent.id);
+        const exist = await this.getByID(id);
         if (!exist) {
             throw new ErrorResponse("O estudante não existe", 404);
         }
 
-        return await studentsRepository.update(updatedStudent)
+        return await studentsRepository.update(id, updatedStudent)
     };
 
     public async deleteStudent(id: number) {

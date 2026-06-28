@@ -4,11 +4,20 @@ import routes from '@/routes/router.js';
 import "dotenv/config";
 import express from "express";
 import errorMiddleware from "./middlewares/error.middleware";
+import cors from 'cors'
+import cookieParser from 'cookie-parser';
 
 const PORT = Number(process.env.API_PORT) ?? 3001;
 
 const app = express();
 
+// Permitir que o frontend acesse a API
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}));
+
+app.use(cookieParser());
 app.use(express.json());
 
 try {

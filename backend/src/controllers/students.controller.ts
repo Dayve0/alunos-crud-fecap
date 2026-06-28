@@ -64,9 +64,11 @@ class StudentsController {
     public async updateStudent(req: Request, res: Response, next: NextFunction) {
         try {
 
+            const { id } = req.params;
+
             const updatedStudent = req.body;
 
-            const student = await studentsService.updateStudent(updatedStudent);
+            const student = await studentsService.updateStudent(Number(id), updatedStudent);
 
             return res.status(200).json(student);
         } catch (error) {
@@ -81,6 +83,20 @@ class StudentsController {
             const { id } = req.params;
 
             const student = await studentsService.deleteStudent(Number(id));
+
+            return res.status(200).json(student);
+        } catch (error) {
+            next(error)
+        }
+    };
+
+    // DELETE
+    public async activateStudent(req: Request, res: Response, next: NextFunction) {
+        try {
+
+            const { id } = req.params;
+
+            const student = await studentsService.updateStudent(Number(id), { status: "ATIVO" });
 
             return res.status(200).json(student);
         } catch (error) {

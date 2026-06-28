@@ -26,6 +26,17 @@ class UsersRepository {
         return await prisma.users.findUnique({ where: { email: email } });
     };
 
+    public async login(email: string) {
+        return await prisma.users.findUnique({
+            where: { email: email }, select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+            }
+        });
+    };
+
     public async create(newUser: PrismaType.usersCreateInput) {
         return await prisma.users.create({ data: newUser });
     };
